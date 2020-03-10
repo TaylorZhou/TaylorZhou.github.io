@@ -293,7 +293,7 @@ serverUri=host-204:10000;version=2.3.5;sequence=0000000000
 ## 4. Kerberos配置
 ### 4.1 添加principal、生成keytab
 
-为hive/host-203@CTYUN.COM 和 hive/host-204@CTYUN.COM 分别生成keytab文件至/etc/security/keytab/hive/hive.keytab并设置好文件权限。
+为hive/host-203@TAYLOR.COM 和 hive/host-204@TAYLOR.COM 分别生成keytab文件至/etc/security/keytab/hive/hive.keytab并设置好文件权限。
 
 ### 4.2 修改配置
 
@@ -306,7 +306,7 @@ serverUri=host-204:10000;version=2.3.5;sequence=0000000000
 
     <property>
       <name>hive.metastore.kerberos.principal</name>
-      <value>hive/_HOST@CTYUN.COM</value>
+      <value>hive/_HOST@TAYLOR.COM</value>
     </property>
 
     <property>
@@ -326,7 +326,7 @@ serverUri=host-204:10000;version=2.3.5;sequence=0000000000
 
     <property>
       <name>hive.server2.authentication.kerberos.principal</name>
-      <value>hive/_HOST@CTYUN.COM</value>
+      <value>hive/_HOST@TAYLOR.COM</value>
     </property>
 ```
 
@@ -372,12 +372,12 @@ serverUri=host-204:10000;version=2.3.5;sequence=0000000000
 
 ```sh
 
-sudo su hive -l -s /bin/bash -c 'kinit -kt /etc/security/keytab/hive/hive.keytab hive/host-03@CTYUN.COM'
+sudo su hive -l -s /bin/bash -c 'kinit -kt /etc/security/keytab/hive/hive.keytab hive/host-03@TAYLOR.COM'
 
 sudo su hive -l -s /bin/bash -c '/opt/cdh/hive/bin/beeline'
 
 > !connect jdbc:hive2://host-03:2181,host-04:2181,host-05:2181/default;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2_zk
-;principal=hive/host-03@CTYUN.COM;auth=KERBEROS
+;principal=hive/host-03@TAYLOR.COM;auth=KERBEROS
 > show databases;
 
 ```
@@ -389,12 +389,12 @@ sudo su hive -l -s /bin/bash -c '/opt/cdh/hive/bin/beeline'
 WatchedEvent state:SyncConnected type:None path:null
 'world,'anyone
 : r
-'sasl,'hive/host-03@CTYUN.COM
+'sasl,'hive/host-03@TAYLOR.COM
 : cdrwa
 ```
 
-第一个注册的hiveserver2服务将/hiveserver2_zk权限设置了 “'sasl,'hive/host-03@CTYUN.COM”，这样第二个hiveserver2服务将无法在zookeeper中注册，不能达到高可用的目的。
+第一个注册的hiveserver2服务将/hiveserver2_zk权限设置了 “'sasl,'hive/host-03@TAYLOR.COM”，这样第二个hiveserver2服务将无法在zookeeper中注册，不能达到高可用的目的。
 
 解决的方法有两个：
-1. 第一个hiveserver2服务注册后主动修改/hiveserver2_zk权限
+1. 第一个hiveserver2服务注册后主动修改/hiveserver2_zk权限
 2. zookeeper zoo.cfg中添加配置skipACL=yes禁掉ACL权限
