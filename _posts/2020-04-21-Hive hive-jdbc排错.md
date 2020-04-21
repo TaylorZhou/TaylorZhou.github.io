@@ -11,7 +11,7 @@ tags: Hadoop MapReduce
 {:toc}
 
 <div class="postImg" style="background-image:url(https://github.com/TaylorZhou/TaylorZhou.github.io/blob/master/assets/blog-image/2020-04-21-1.png?raw=true)"></div>
-> “本文记载笔者运行 MapReduce 出错后，如何一步步找出问题及最终解决问题”
+> “本文记载笔者运行 hive-jdbc 出错后，如何一步步找出问题及最终解决问题”
 
 
 
